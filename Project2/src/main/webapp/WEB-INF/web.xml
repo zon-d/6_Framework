@@ -7,8 +7,12 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		
+		<!-- 서버가 start 되자마자 적용할 설정 파일을 작성 -->
 		<!-- spring폴더 이동 후 경로 변경 -->
-		<param-value>classpath:spring/root-context.xml</param-value>
+		<param-value>
+		classpath:spring/root-context.xml
+		classpath:spring/spring-security.xml
+		</param-value>
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -37,5 +41,21 @@
 		<!-- 최상위 주소 이하 모든 요청 주소 -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	<!-- 한글 깨짐 방지를 위한 인코딩 필터 추가 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 </web-app>
