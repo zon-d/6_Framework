@@ -460,3 +460,17 @@ label[for='header-menu-toggle']:hover{
     margin: 0px;
     color: grey;
 }
+
+#content1-2{
+    width: 500px;
+    margin: 50px auto;
+}
+
+.secession{
+    background-color: #ccc;
+}
+
+.secession>td:first-of-type{
+    /* 가운데 선 */
+    text-decoration: line-through;
+}
