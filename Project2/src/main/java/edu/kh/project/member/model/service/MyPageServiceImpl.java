@@ -76,7 +76,8 @@ public class MyPageServiceImpl implements MyPageService {
 
 			return result;
 
-			// return dao.memberDelete(memberNo); ** 사용가능 **
+		
+		 	// return dao.memberDelete(memberNo); ** 사용가능 **
 		}
 
 		return 0;
@@ -122,5 +123,6 @@ public class MyPageServiceImpl implements MyPageService {
 		
 		return result; // 결과 반환
 	}
+	
 
 }

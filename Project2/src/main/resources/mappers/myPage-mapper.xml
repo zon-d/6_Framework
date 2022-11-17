@@ -62,7 +62,7 @@
    </delete>
    
    <!-- 프로필 이미지 수정 -->
-   <update id=updateProfile" parametertype="Member">
+   <update id="updateProfile" parameterType="Member">
    		UPDATE "MEMBER" SET
    		PROFILE_IMG = #{profileImage}
    		WHERE MEMBER_NO = #{memberNo}
