@@ -5,7 +5,6 @@
 <c:set var="boardList" value="${map.boardList}"/>
 <c:set var="pagination" value="${map.pagination}"/>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,11 +22,9 @@
     <main>
         <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
-        
         <section class="board-list">
 
             <h1 class="board-name">${boardName}</h1>
-
 
             <div class="list-wrapper">
                 <table class="list-table">
@@ -63,9 +60,9 @@
                                             </c:if>
 
                                             <%-- /board/1/1500
-                                                /board/{boardCode}/{boardNo}
+                                                /board/{boardCode}/{boardNo}?cp=${pagination.currentPage}
                                             --%>
-                                            <a href="/board/${boardCode}/${board.boardNo}">${board.boardTitle}번째 게시글</a>
+                                            <a href="/board/${boardCode}/${board.boardNo}?cp=${pagination.currentPage}">${board.boardTitle}</a>
                                             [${board.commentCount}]                        
                                         </td>
                                         <td>${board.memberNickname}</td>
@@ -77,40 +74,53 @@
                             </c:otherwise>
                         </c:choose>
 
-
-                        
                     </tbody>
                 </table>
             </div>
 
-
             <div class="btn-area">
 
 				<!-- 로그인 상태일 경우 글쓰기 버튼 노출 -->
+
+                <c:if test="${not empty sessionScope.loginMember}"></c:if>
+            
                 <button id="insertBtn">글쓰기</button>                     
 
             </div>
 
-
             <div class="pagination-area">
-
 
                 <ul class="pagination">
                 
                     <!-- 첫 페이지로 이동 -->
-                    <li><a href="#">&lt;&lt;</a></li>
+                    <li><a href="/board/${boardCode}">&lt;&lt;</a></li>
 
                     <!-- 이전 목록 마지막 번호로 이동 -->
-                    <li><a href="#">&lt;</a></li>
+                    <li><a href="/board/${boardCode}?cp=${pagination.prevPage}">&lt;</a></li>
 
-					
-                    <!-- 특정 페이지로 이동 -->
+					<c:forEach var="i" begin="${pagination.startPage}"
+                        end="${pagination.endPage}" step="1">
+
+                        <c:choose>
+                            <c:when test="${i == pagination.currentPage}">
+                                <%-- 현재 페이지인 경우 --%>
+                                <li><a class="current">${i}</a></li>
+                            </c:when>
+
+                            <c:otherwise>
+                                <!-- 현재 페이지를 제외한 나머지 -->
+                                <li><a href="/board/${boardCode}?cp=${i}">${i}</a></li>
+                            </c:otherwise>
+                        </c:choose>
                     
+                    </c:forEach>
+                    
+                    <!-- 특정 페이지로 이동 -->
                     <!-- 현재 보고있는 페이지 -->
-                    <li><a class="current">1</a></li>
+                    <%-- <li><a class="current">1</a></li> --%>
                     
                     <!-- 현재 페이지를 제외한 나머지 -->
-                    <li><a href="#">2</a></li>
+                    <%-- <li><a href="#">2</a></li>
                     <li><a href="#">3</a></li>
                     <li><a href="#">4</a></li>
                     <li><a href="#">5</a></li>
@@ -118,17 +128,17 @@
                     <li><a href="#">7</a></li>
                     <li><a href="#">8</a></li>
                     <li><a href="#">9</a></li>
-                    <li><a href="#">10</a></li>
+                    <li><a href="#">10</a></li> **예시** 
+                    * forEach문으로 대체--%>
                     
                     <!-- 다음 목록 시작 번호로 이동 -->
-                    <li><a href="#">&gt;</a></li>
+                    <li><a href="/board/${boardCode}?cp=${pagination.nextPage}">&gt;</a></li>
 
                     <!-- 끝 페이지로 이동 -->
-                    <li><a href="#">&gt;&gt;</a></li>
+                    <li><a href="/board/${boardCode}?cp=${pagination.maxPage}">&gt;&gt;</a></li>
 
                 </ul>
             </div>
-
 
 			<!-- 검색창 -->
             <form action="#" method="get" id="boardSearch" onsubmit="return false">
@@ -148,16 +158,18 @@
         </section>
     </main>
     
-    
     <!-- 썸네일 클릭 시 모달창 출력 -->
     <div class="modal">
         <span id="modal-close">&times;</span>
         <img id="modal-image" src="/resources/images/board/20221116105843_00001.gif">
     </div>
 
-
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
+    <script>
+        const boardCode = "${boardCode}";
+    </script>
+    <script src="/resources/js/board/boardList.js"></script>
 
 </body>
 </html>
