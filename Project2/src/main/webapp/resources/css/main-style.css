@@ -145,6 +145,7 @@ nav{
 
     /* 기본값이 투명이기에 background-color 지정 필요 */
     background-color: white;
+    z-index: 100;
 }
 
 
