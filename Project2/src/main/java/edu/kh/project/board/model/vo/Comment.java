@@ -18,5 +18,6 @@ public class Comment {
     private int parentNo;
     private String memberNickname;
     private String profileImage;
+    private int childCheck;
 
 }
